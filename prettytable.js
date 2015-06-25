@@ -16,12 +16,24 @@ if (typeof module != "undefined" && module.exports)
 //----------------------------------------------------------
 
 function rowHeights(rows) {
+	
+
+
 	return rows.map(function(row) {
+
+		console.log("ROW : " + JSON.stringify(row));
+
 		return row.reduce(function(max, cell) {
-			return Math.max(max, cell.minHeight());
+
+			var r = Math.max(max, cell.minHeight()); 
+			console.log("RETURNS : " + r);
+			return r;
 		}, 0);
 	});
 }
+
+// Using a variable name starting with an underscore (_) or consisting entirely of a 
+// single underscore is a way to indicate (to human readers) that this argument is not going to be used.
 
 function colWidths(rows) {
 	return rows[0].map(function(_, i) {
@@ -52,6 +64,9 @@ function dataTable(data) {
 //----------------------------------------------------------
 
 function drawTable(rows) {
+
+	console.log("ROWS " + JSON.stringify(rows));
+
 	var heights = rowHeights(rows);
 	var widths = colWidths(rows);
 
@@ -80,9 +95,18 @@ function repeat(string, times) {
 	return result;
 }
 
+//constructor
 function TextCell(text) {
 	this.text = text.split("\n");
 }
+
+// It is important to note the distinction between the way a prototype is associated 
+// with a constructor (through its prototype property) 
+// and the way objects have a prototype (which can be retrieved with Object.getPrototypeOf). 
+// The actual prototype of a constructor is Function.prototype 
+// since constructors are functions. Its prototype property will be the prototype of 
+// instances created through it but is not its own prototype.
+
 TextCell.prototype.minWidth = function() {
 	return this.text.reduce(function(width, line) {
 		return Math.max(width, line.length);
@@ -104,6 +128,7 @@ function RTextCell(text) {
 	TextCell.call(this, text);
 }
 RTextCell.prototype = Object.create(TextCell.prototype);
+
 RTextCell.prototype.draw = function(width, height) {
 	var result = [];
 	for (var i = 0; i < height; i++) {
@@ -112,6 +137,13 @@ RTextCell.prototype.draw = function(width, height) {
 	}
 	return result;
 };
+
+console.log(Object.getPrototypeOf(TextCell) == Function.prototype);
+console.log(Object.getPrototypeOf(RTextCell) == Function.prototype);
+
+console.log(Object.prototype);
+console.log(TextCell.prototype);
+console.log(RTextCell.prototype);
 
 function UnderlinedCell(inner) {
 	this.inner = inner;

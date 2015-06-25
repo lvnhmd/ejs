@@ -59,3 +59,7 @@ console.log(/'\d*'/ + " (zero or more)  MATCHES \"'123'\" ? " + /'\d*'/.test("'1
 // → true
 console.log(/'\d*'/ + " (zero or more)  MATCHES \"''\" ? " + /'\d*'/.test("''"));
 // → true
+
+var re1 = new RegExp("abc");
+var re2 = /abc/;
+

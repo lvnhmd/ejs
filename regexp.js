@@ -60,6 +60,60 @@ console.log(/'\d*'/ + " (zero or more)  MATCHES \"'123'\" ? " + /'\d*'/.test("'1
 console.log(/'\d*'/ + " (zero or more)  MATCHES \"''\" ? " + /'\d*'/.test("''"));
 // → true
 
-var re1 = new RegExp("abc");
-var re2 = /abc/;
+var neighbor = /neighbou?r/;
+console.log(neighbor + " (zero or one) MATCHES \"neighbour\" ? " + neighbor.test("neighbour"));
+// → true
+console.log(neighbor + " (zero or one) MATCHES \"neighbour\" ? " + neighbor.test("neighbor"));
+// → true
 
+var dateTime = /\d{1,2}-\d{1,2}-\d{4} \d{1,2}:\d{2}/;
+console.log(dateTime + " MATCHES \"30-1-2003 8:45\" ? " + dateTime.test("30-1-2003 8:45"));
+
+// The first and second + characters apply only to the second o in boo and hoo, respectively. The third + applies to the whole group (hoo+), matching one or more sequences like that.
+
+// The i at the end of the expression in the previous example makes this regular expression case insensitive, allowing it to match the uppercase B in the input string, even though the pattern is itself all lowercase.
+var cartoonCrying = /boo+(hoo+)+/i;
+console.log(cartoonCrying + " MATCHES Boohoooohoohooo ? " + cartoonCrying.test("Boohoooohoohooo"));
+
+
+var match = /\d+/.exec("one two 100");
+console.log("\/\d+\/.exec(\"one two 100\")" + " = " + match);
+console.log(match);
+// → ["100"]
+
+var quotedText = /'([^']*)'/;
+console.log(quotedText + ".exec = " + quotedText.exec("she said 'hello'"));
+// → ["'hello'", "hello"]
+
+console.log("/bad(ly)?/.exec(\"bad\") = " + /bad(ly)?/.exec("bad"));
+console.log(/bad(ly)?/.exec("bad"));
+// → ["bad", undefined]
+console.log("/(\d)+/.exec(\"123\")) = "+ /(\d)+/.exec("123"));
+// → ["123", "3"]
+// So, /^\d+$/ matches a string consisting entirely of one or more digits, /^!/ matches any string that starts with an exclamation mark, and /x^/ does not match any string (there cannot be an x before the start of the string).
+
+
+console.log(/cat/.test("concatenate"));
+// → true
+console.log(/\bcat\b/.test("concatenate"));
+// → false
+
+console.log(/\bcat\b/.test("con cat enate"));
+
+var animalCount = /\b\d+ (pig|cow|chicken)s?\b/;
+console.log(animalCount.test("15 pigs"));
+// → true
+console.log(animalCount.test("15 pigchickens"));
+// → false
+
+console.log(/^.*x/.exec("abcxe"));
+
+
+console.log("Borobudur".replace(/[ou]/, "a"));
+// → Barobudur
+console.log("Borobudur".replace(/[ou]/g, "a"));
+// → Barabadar
+
+console.log(
+  "Hopper, Grace\nMcCarthy, John\nRitchie, Dennis"
+    .replace(/([\w]+), ([\w]+)/g, "$2 $1"));
